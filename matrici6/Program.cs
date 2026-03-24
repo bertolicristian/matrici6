@@ -53,23 +53,93 @@
             
             for (int i = 0; i < V1.Length; i++)
             {
-                Console.Write($"[{V1[i]}]" + " ");
+                Console.Write($"[{V1[i]}]");
             }
             return V1;
         }
 
-        static void SommaColonne(float[,] M , int[] V2)
+        static float[] SommaColonne(float[,] M)
         {
+            float[] V2 = new float[M.GetLength(0)];
+
             for (int i = 0; i < M.GetLength (0); i++)
             {
                 for (int j = 0; j < M.GetLength(1); j++)
                 {
+                    V2[j] += M[j, i];
+                }
+            }
 
+            for (int i = 0; i < V2.Length; i++)
+            {
+                Console.Write($"[{V2[i]}]");
+            }
+
+            return V2;
+        }
+        static void Somma(float[,] M)
+        {
+            float[,] M1 = new float[M.GetLength(0), M.GetLength(1)];
+
+            for (int i = 0; i < M.GetLength(0); i++)
+            {
+                for (int j = 0; j < M.GetLength(1); j++)
+                {
+                    float somma = 0;
+
+                    if (i > 0)
+                    {
+                        somma += M[i - 1, j];
+                    }
+
+                    if (i < M.GetLength(0) - 1)
+                    {
+                        somma += M[i + 1, j];
+                    }
+
+                    if (j > 0)
+                    {
+                        somma += M[i, j - 1];
+                    }
+
+                    if (j < M.GetLength(1) - 1)
+                    {
+                        somma += M[i, j + 1];
+                    }
+
+                    if (i > 0 && j > 0)
+                    {
+                        somma += M[i - 1, j - 1];
+                    }
+
+                    if (i > 0 && j < M.GetLength(1) - 1)
+                    {
+                        somma += M[i - 1, j + 1];
+                    }
+
+                    if (i < M.GetLength(0) - 1 && j > 0)
+                    {
+                        somma += M[i + 1, j - 1];
+                    }
+
+                    if (i < M.GetLength(0) - 1 && j < M.GetLength(1) - 1)
+                    {
+                        somma += M[i + 1, j + 1];
+                    }
+
+                    M1[i, j] = somma;
+                }
+            }
+
+            for (int i = 0; i < M1.GetLength(0); i++)
+            {
+                Console.WriteLine();
+                for (int j = 0; j < M1.GetLength(1); j++)
+                {
+                    Console.Write($"[{M1[i, j]}] ");
                 }
             }
         }
-       
-
 
         static void Main(string[] args)
         {
@@ -94,7 +164,18 @@
 
             MediaRighe(M);
 
+            Console.WriteLine();
+            Console.WriteLine();
+
+            SommaColonne(M);
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Somma(M);
             
+
+
         }
     }
 }
